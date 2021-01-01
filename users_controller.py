@@ -14,7 +14,7 @@ parser.add_argument('note')              #同上
 
 
 
-class Users(Resource):
+class Users(Resource):                                                #針對多筆資料
     
     def db_init(self):                                                #初始化
         db = pymysql.connect("localhost","root","asd23029663","api")  #連線資料庫，(資料庫主機位置、帳號、密碼、資料庫名稱)
@@ -24,7 +24,7 @@ class Users(Resource):
     
     def get(self):
         db, cursor =self.db_init()                                  #準備好資料庫、和取出的資料
-        sql = 'Select * from api.users'                             #mysql語句
+        sql = """Select * from api.users WHERE deleted is not True"""  #軟刪除方式所以用此語法
         cursor.execute(sql)                                        
         db.commit()                                                #送出指令
         users = cursor.fetchall()                                  #取道資料後，放到user變數中
@@ -36,7 +36,7 @@ class Users(Resource):
         db, cursor = self.db_init()
         arg = parser.parse_args()                                  # 將使用者傳來的資料，放到變數arg中，資料結構是鍵值所構成
         
-        user = {                                                    #方便做資料的改動與設定                       
+        users = {                                                    #方便做資料的改動與設定                       
             'name':arg['name'],
             'gender':arg['gender'] or 0,                            #沒輸入就是預設值 0 
             'birth':arg['birth'] or '1900-01-01',                   #沒輸入就是預設值 '1900-01-01' 
@@ -44,8 +44,8 @@ class Users(Resource):
         }
         
         sql = """
-        INSERT into 'api'.users('name', 'gender','birth', 'note') VALUES('{}', '{}', '{}','{}')
-        """ .format(user['name'],user['gender'],user['birth'],user['note'])
+        INSERT INTO `api`.`users` (`name`, `gender`, `birth`, `note`) VALUES ('{}', '{}', '{}', '{}');
+        """ .format(users['name'],users['gender'],users['birth'],users['note'])
         
         response = {}
         
@@ -55,4 +55,8 @@ class Users(Resource):
             
         except:
             traceback.print_exc()
-            response['msg'] = 'fail'
+            response['msg'] = 'failed'
+            
+        db.commit()
+        db.close
+        return jsonify(response)
