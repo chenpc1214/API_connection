@@ -23,26 +23,35 @@ api.add_resource(User , "/users/<id>")      #這段程式碼在說，當我到�
 api.add_resource(account_controller , "/users/<user_id>/accounts")
 api.add_resource(one_controller , "/users/<user_id>/accounts/<id>")
 
+@app.errorhandler(Exception)
+def handler_error(error):
+    status_code =500
+    if type(error).__name__ == "NotFound":
+        status_code =404
+    elif type(error).__name__ =="TypeErro":
+        status_code =500
+    return jsonify({'msg:':type(error).__name__}),status_code
+
 @app.before_request                         #別人要進到我家(網址)之前要先經過驗證
-def auth():
-    token = request.headers.get('auth')     #檢查headers
-    user_id = request.get_json()['user_id']   #規定使用者要以json格式，且用鍵為user_id方式傳值進來
+#def auth():
+#    token = request.headers.get('auth')     #檢查headers
+#    user_id = request.get_json()['user_id']   #規定使用者要以json格式，且用鍵為user_id方式傳值進來
     
-    valid_token = jwt.encode({'user_id':user_id,"timestamp":int(time.time())}, 
-                            'password',
-                            algorithm='HS256')                                 #jwt可以將使用者傳來的資料，和現在時間點
+#    valid_token = jwt.encode({'user_id':user_id,"timestamp":int(time.time())}, 
+#                            'password',
+#                            algorithm='HS256')                                 #jwt可以將使用者傳來的資料，和現在時間點
                                                                                #產出一個亂碼，確定使用者身分
                                                                                #(每經過一秒會重新再次加密)
                                                                                #password是要加密使用者傳來的資料
                                                                                #它是一種金鑰，可能會根據使用者的id
                                                                                #從資料庫取得該使用者專屬的金鑰
-    print(valid_token)
-    if token==valid_token:
-        pass
-    else:
-        return{
-            'msg':'invalid token'
-        }
+#    print(valid_token)
+#    if token==valid_token:
+#        pass
+#    else:
+#        return{
+#            'msg':'invalid token'
+#        }
                                         
     
 @app.route('/') 
