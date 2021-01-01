@@ -7,6 +7,7 @@ import pymysql
 import traceback
 import jwt                       #驗證系統(json_web_token)
 import time
+from server import app           #從自建serve.py 引進 SQLAlchemy
 
 
 app = Flask(__name__)

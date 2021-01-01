@@ -4,6 +4,7 @@ from flask import jsonify            #用來將我們從資料庫取出的資料
 import pymysql                       #用來連資料庫的套件
 import traceback                     #印出錯誤訊息的套件
 
+
 parser = reqparse.RequestParser()    #做一個篩子，當使用者丟一堆資料過來，我只選我要的
 
 parser.add_argument('name')              #要留下的東西
