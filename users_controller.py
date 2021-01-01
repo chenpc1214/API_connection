@@ -24,13 +24,11 @@ class Users(Resource):                                                #針對多
     
     def get(self):
         db, cursor =self.db_init()                                  #準備好資料庫、和取出的資料
-        arg = parser.parse_args()
-        sql = """Select * from api.users WHERE id = '{}' """ .format(id)                           
-                                              
-        if arg['gender']!=None:                                         #搜尋器
-            sql += "and gender = '{}' ".format(arg['gender']) 
-        sql = """Select * from api.users WHERE deleted is not True"""  #軟刪除方式所以用此語法
-        cursor.execute(sql)                                        
+        arg = parser.parse_args()                          
+        sql ='Select * From api.users where deleted is not True'     #軟刪除方式所以用此語法
+        if arg['gender'] != None:                                         #搜尋器
+            sql +=' and gender = "{}"'.format(arg['gender']) 
+        cursor.execute(sql)                                     
         db.commit()                                                #送出指令
         users = cursor.fetchall()                                  #取道資料後，放到user變數中
         db.close()
