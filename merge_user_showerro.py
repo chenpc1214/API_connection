@@ -3,15 +3,15 @@ from flask_restful import reqparse                 #用來處理使用者的post
 from flask import jsonify,make_response            #jsonify用來將我們從資料庫取出的資料，自動整合成json格式
                                                    #在restful當中，return型態是jsonify，但是它是在一個物件內
                                                    #結構比較特殊
-import pymysql                       #用來連資料庫的套件
-import traceback                     #印出錯誤訊息的套件
+import pymysql                                     #用來連資料庫的套件
+import traceback                                   #印出錯誤訊息的套件
 
-parser = reqparse.RequestParser()    #做一個篩子，當使用者丟一堆資料過來，我只選我要的
+parser = reqparse.RequestParser()                  #做一個篩子，當使用者丟一堆資料過來，我只選我要的
 
-parser.add_argument('name')              #要留下的東西
-parser.add_argument('gender')            #同上
-parser.add_argument('birth')             #同上
-parser.add_argument('note')              #同上
+parser.add_argument('name')                        #要留下的東西
+parser.add_argument('gender')                      #同上
+parser.add_argument('birth')                       #同上
+parser.add_argument('note')                        #同上
 
 
 

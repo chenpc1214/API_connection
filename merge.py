@@ -1,7 +1,6 @@
 from flask import Flask,jsonify,request
 from flask_restful import Api
-from merge_users import Users     #引用自創類別，假裝是輸入方的指令(針對多個使用者)
-from merge_user import User     #引用自創類別，假裝是輸入方的指令(針對多個使用者)
+from merge_user_model import User,Users
 from merge_account import account_controller,one_controller
 import pymysql
 import traceback
