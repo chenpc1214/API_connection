@@ -17,7 +17,7 @@ parser.add_argument('note')              #同上
 class Users(Resource):                                                #針對多筆資料
     
     def db_init(self):                                                #初始化
-        db = pymysql.connect("localhost","root","asd23029663","api")  #連線資料庫，(資料庫主機位置、帳號、密碼、資料庫名稱)
+        db = pymysql.connect("localhost","root","***********","api")  #連線資料庫，(資料庫主機位置、帳號、密碼、資料庫名稱)
         cursor = db.cursor(pymysql.cursors.DictCursor)                #這行功能在於當有資料庫的資料被取出，例如：id:25 name:John
                                                                       #沒有此段敘述，就會這樣顯示---> {25 , "john"}，會不知道欄位名
         return db , cursor

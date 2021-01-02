@@ -14,7 +14,7 @@ parser.add_argument('user_id')
 class account_controller(Resource):
     
     def db_init(self):
-        db = pymysql.connect("localhost","root","asd23029663","account")
+        db = pymysql.connect("localhost","root","****************","account")
         cursor = db.cursor(pymysql.cursors.DictCursor)
         
         return db,cursor
