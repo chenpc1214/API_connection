@@ -1,3 +1,4 @@
+#SQLAlchemy伺服器......
 #將原來的@app和資料庫提出來，與以往用pymysql建立一個db的不同處在於
 # SQLAlchemy可以讓此檔的db讓不同py檔案使用
 
